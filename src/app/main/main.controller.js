@@ -19,15 +19,45 @@ class MainController {
     }
   }
 
+  createCategory() {
+    var name = this.$window.prompt('Category name');
+
+    if (name) {
+      this.categories.create(name);
+    }
+  }
+
   inboxToFeed(task) {
     this.inbox.remove(task);
     this.feed.add(task);
   }
 
+  inboxToCategory(task) {
+    this.inbox.remove(task);
+    this.categories.add(task);
+  }
+
+  categoryToFeed(task) {
+    this.categories.remove(task);
+    this.feed.add(task);
+  }
+
+  categoryToInbox(task) {
+    this.categories.remove(task);
+    task.category = null;
+    this.inbox.add(task);
+  }
+
   feedToInbox(task) {
     this.feed.remove(task);
     task.complete = false;
+    task.category = null;
     this.inbox.add(task);
+  }
+
+  feedToCategory(task) {
+    this.feed.remove(task);
+    this.categories.add(task);
   }
 }
 

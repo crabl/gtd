@@ -19,7 +19,7 @@ import FeedService from './feed/feed.service';
 import NavbarDirective from '../app/components/navbar/navbar.directive';
 import MalarkeyDirective from '../app/components/malarkey/malarkey.directive';
 
-angular.module('gtd', ['ngTouch', 'ui.router'])
+angular.module('gtd', ['ngTouch', 'ui.router', 'angular.filter'])
   .constant('malarkey', malarkey)
   .constant('toastr', toastr)
   .constant('moment', moment)

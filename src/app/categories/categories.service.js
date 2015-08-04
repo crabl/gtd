@@ -2,41 +2,31 @@ class CategoriesService {
   constructor(List) {
     'ngInject';
 
-    this.categories = {
-      'Home': new List([{
-        title: 'take out the trash',
-        complete: false
-      }, {
-        title: 'do other shit',
-        complete: false
-      }]),
-      'Work': new List()
-    };
+    this.nextId = 2;
+    this.names = new List([{
+      name: 'Home',
+      id: 1
+    }, {
+      name: 'Work',
+      id: 2
+    }]);
+    this.items = new List();
     this.List = List;
   }
 
   create(name) {
-    if (!this.categories[name]) {
-      this.categories[name] = new this.List();
-    }
+    this.names.addItem({
+      name: name,
+      nextId: ++this.nextId
+    });
   }
 
-  remove(name) {
-    if (this.categories[name]) {
-      delete this.categories[name];
-    }
+  remove(task) {
+    return this.items.removeItem(task);
   }
 
-  categorize(category, task) {
-    return this.categories[category].addItem(task);
-  }
-
-  uncategorize(category, task) {
-    return this.categories[category].removeItem(task);
-  }
-
-  list() {
-    return this.categories;
+  add(task) {
+    return this.items.addItem(task);
   }
 }
 

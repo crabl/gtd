@@ -4,13 +4,16 @@ class InboxService {
 
     this.inbox = new List([{
       title: 'First task',
-      complete: false
+      complete: false,
+      category: null
     }, {
       title: 'Second task',
-      complete: false
+      complete: false,
+      category: null
     }, {
       title: 'Third task',
-      complete: false
+      complete: false,
+      category: null
     }]);
   }
 

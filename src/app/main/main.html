@@ -4,7 +4,12 @@
     <h2>Inbox</h2> <button ng-click="main.createInboxTask()">+ New Task</button>
     <ul>
       <li ng-repeat="task in main.inbox.tasks() track by $index">
-        <button ng-click="main.inbox.remove(task)">x</button> {{task.title}} <button>cat</button> <button ng-click="main.inboxToFeed(task)">feed</button>
+        <button ng-click="main.inbox.remove(task)">x</button> {{task.title}}
+
+        <select ng-model="task.category" ng-change="main.inboxToCategory(task)" ng-options="category as category.name for category in main.categories.names.getItems()">
+        </select>
+
+        <button ng-click="main.inboxToFeed(task)">feed</button>
       </li>
     </ul>
   </div>
@@ -12,11 +17,17 @@
   <div class="col">
     <h2>Categories</h2> <button ng-click="main.createCategory()">+ New Category</button>
     <ul>
-      <li ng-repeat="(category, list) in main.categories.list() track by $index">
+      <li ng-repeat="(category, list) in main.categories.items.getItems() | groupBy:'category.name'">
         {{category}}
         <ul>
-          <li ng-repeat="task in list.getItems() track by $index">
-            <button ng-click="main.categories.uncategorize(category, task)">x</button> {{task.title}}
+          <li ng-repeat="task in list track by $index">
+            <button ng-click="main.categories.remove(task)">x</button> {{task.title}}
+
+            <select ng-model="task.category" ng-options="category as category.name for category in main.categories.names.getItems()">
+            </select>
+
+            <button ng-click="main.categoryToInbox(task)">inbox</button>
+            <button ng-click="main.categoryToFeed(task)">feed</button>
           </li>
         </ul>
       </li>
@@ -27,7 +38,7 @@
     <h2>Feed</h2>
     <ul>
       <li ng-repeat="task in main.feed.tasks() track by $index | orderBy:'complete'">
-        <button ng-click="main.feed.remove(task)">x</button> <button ng-click="main.feed.toggleCompletion(task)">{{task.complete}}</button> {{task.title}} <button>cat</button> <button ng-click="main.feedToInbox(task)">inbox</button>
+        <button ng-click="main.feed.remove(task)">x</button> <button ng-click="main.feed.toggleCompletion(task)">{{task.complete ? '&#9745;' : '&#9744;'}}</button> {{task.title}} <button ng-show="task.category" ng-click="main.feedToCategory(task)">{{task.category.name}}</button> <button ng-click="main.feedToInbox(task)">inbox</button>
       </li>
     </ul>
   </div>
