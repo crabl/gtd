@@ -37,7 +37,7 @@
   <div class="col">
     <h2>Feed</h2>
     <ul>
-      <li ng-repeat="task in main.feed.tasks() track by $index | orderBy:'complete'">
+      <li ng-repeat="task in main.feed.tasks() track by $index | orderBy:'task.complete'">
         <button ng-click="main.feed.remove(task)">x</button> <button ng-click="main.feed.toggleCompletion(task)">{{task.complete ? '&#9745;' : '&#9744;'}}</button> {{task.title}} <button ng-show="task.category" ng-click="main.feedToCategory(task)">{{task.category.name}}</button> <button ng-click="main.feedToInbox(task)">inbox</button>
       </li>
     </ul>
