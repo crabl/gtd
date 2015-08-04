@@ -8,6 +8,7 @@ class MainController {
     this.feed = FeedService;
   }
 
+  // InboxCtrl
   createInboxTask() {
     var title = this.$window.prompt('Task name');
 
@@ -16,14 +17,6 @@ class MainController {
         title: title,
         complete: false
       });
-    }
-  }
-
-  createCategory() {
-    var name = this.$window.prompt('Category name');
-
-    if (name) {
-      this.categories.create(name);
     }
   }
 
@@ -37,6 +30,15 @@ class MainController {
     this.categories.add(task);
   }
 
+  // CategoryCtrl
+  createCategory() {
+    var name = this.$window.prompt('Category name');
+
+    if (name) {
+      this.categories.create(name);
+    }
+  }
+
   categoryToFeed(task) {
     this.categories.remove(task);
     this.feed.add(task);
@@ -48,6 +50,7 @@ class MainController {
     this.inbox.add(task);
   }
 
+  // FeedCtrl
   feedToInbox(task) {
     this.feed.remove(task);
     task.complete = false;
