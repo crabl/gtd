@@ -4,9 +4,18 @@ import config from './index.config';
 import routerConfig from './index.route';
 
 import runBlock from './index.run';
+
+// Controllers
 import MainController from './main/main.controller';
-import GithubContributorService from '../app/components/githubContributor/githubContributor.service';
-import WebDevTecService from '../app/components/webDevTec/webDevTec.service';
+
+// Third-Party Libraries
+import List from '../app/components/list/list.service';
+
+// Services
+import InboxService from './inbox/inbox.service';
+import CategoriesService from './categories/categories.service';
+import FeedService from './feed/feed.service';
+
 import NavbarDirective from '../app/components/navbar/navbar.directive';
 import MalarkeyDirective from '../app/components/malarkey/malarkey.directive';
 
@@ -14,13 +23,15 @@ angular.module('gtd', ['ngTouch', 'ui.router'])
   .constant('malarkey', malarkey)
   .constant('toastr', toastr)
   .constant('moment', moment)
+  .constant('List', List)
   .config(config)
 
   .config(routerConfig)
 
   .run(runBlock)
-  .service('githubContributor', GithubContributorService)
-  .service('webDevTec', WebDevTecService)
+  .service('InboxService', InboxService)
+  .service('CategoriesService', CategoriesService)
+  .service('FeedService', FeedService)
   .controller('MainController', MainController)
   .directive('acmeNavbar', () => new NavbarDirective())
   .directive('acmeMalarkey', () => new MalarkeyDirective(malarkey));

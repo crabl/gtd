@@ -1,34 +1,35 @@
 class MainController {
-  constructor ($timeout, webDevTec, toastr) {
+  constructor($window, InboxService, CategoriesService, FeedService) {
     'ngInject';
 
-    this.awesomeThings = [];
-    this.classAnimation = '';
-    this.creationDate = 1438659051864;
-    this.toastr = toastr;
-
-    this.activate($timeout, webDevTec);
+    this.$window = $window;
+    this.inbox = InboxService;
+    this.categories = CategoriesService;
+    this.feed = FeedService;
   }
 
-  activate($timeout, webDevTec) {
-    this.getWebDevTec(webDevTec);
-    $timeout(() => {
-      this.classAnimation = 'rubberBand';
-    }, 4000);
+  createInboxTask() {
+    var title = this.$window.prompt('Task name');
+
+    if (title) {
+      this.inbox.add({
+        title: title,
+        complete: false
+      });
+    }
   }
 
-  getWebDevTec(webDevTec) {
-    this.awesomeThings = webDevTec.getTec();
-
-    angular.forEach(this.awesomeThings, (awesomeThing) => {
-      awesomeThing.rank = Math.random();
-    });
+  inboxToFeed(task) {
+    this.inbox.remove(task);
+    this.feed.add(task);
   }
 
-  showToastr() {
-    this.toastr.info('Fork <a href="https://github.com/Swiip/generator-gulp-angular" target="_blank"><b>generator-gulp-angular</b></a>');
-    this.classAnimation = '';
+  feedToInbox(task) {
+    this.feed.remove(task);
+    task.complete = false;
+    this.inbox.add(task);
   }
 }
+
 
 export default MainController;
